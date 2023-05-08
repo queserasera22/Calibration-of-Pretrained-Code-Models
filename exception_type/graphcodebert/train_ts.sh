@@ -1,0 +1,11 @@
+CUDA_VISIBLE_DEVICES=0 python3 train_ts.py \
+    --model_name_or_path=microsoft/graphcodebert-base \
+    --model_path=./models/model.bin \
+    --config_name=microsoft/graphcodebert-base \
+    --tokenizer_name=microsoft/graphcodebert-base \
+    --eval_data_file="../dataset/valid.jsonl" \
+    --test_data_file="../dataset/test.jsonl" \
+    --lang=python \
+    --code_length 384 \
+    --data_flow_length 128 \
+    --seed 123456

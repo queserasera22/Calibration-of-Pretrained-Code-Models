@@ -1,0 +1,20 @@
+CUDA_VISIBLE_DEVICES=1 python main.py \
+    --model_name_or_path='Salesforce/codet5-base' \
+    --config_name='Salesforce/codet5-base' \
+    --tokenizer_name='Salesforce/codet5-base' \
+    --model_type codet5 \
+    --task clone \
+    --sub_task ['none'] \
+    --output_dir="./models" \
+    --data_dir="../dataset" \
+    --cache_path="./cache" \
+    --res_dir="./logs" \
+    --summary_dir="./logs" \
+    --do_test  \
+    --load_model_path="./models/checkpoint-best-f1/pytorch_model.bin" \
+    --train_batch_size 4 \
+    --eval_batch_size 8 \
+    --max_source_length 512 \
+    --num_train_epochs 1 \
+    --learning_rate 5e-5 \
+    --seed 123456 2>&1| tee ./logs/test.log

@@ -1,0 +1,12 @@
+CUDA_VISIBLE_DEVICES=3 python3 train_ts.py \
+    --model_name_or_path=microsoft/graphcodebert-base \
+    --model_path=./models/model.bin \
+    --config_name=microsoft/graphcodebert-base \
+    --tokenizer_name=microsoft/graphcodebert-base \
+    --eval_data_file="../dataset/valid_sampled.txt" \
+    --test_data_file="../dataset/test_sampled.txt" \
+    --lang=java \
+    --code_length 384 \
+    --data_flow_length 128 \
+    --eval_batch_size 64 \
+    --seed 123456
