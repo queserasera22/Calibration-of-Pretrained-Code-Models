@@ -9,12 +9,9 @@ class Model(nn.Module):
         super(Model, self).__init__()
         self.encoder = encoder
         self.args = args
-        self.logsoftmax = nn.LogSoftmax(dim=-1)
 
     def forward(self, input_ids=None, labels=None):
         logits = self.encoder(input_ids, attention_mask=input_ids.ne(1))[0]
-
-        logits = self.logsoftmax(logits)
 
         prob = F.softmax(torch.tensor(logits), dim=-1)
         # prob = torch.tensor(logits)
