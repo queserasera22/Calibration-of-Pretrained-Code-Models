@@ -9,7 +9,6 @@ The environment dependencies are listed in the file "requirements.txt". You can 
 
 ```
 conda create --name <env> --file requirements.txt
-
 ```
 
 ## Tasks and Datasets
@@ -33,6 +32,51 @@ We evaluate the effectiveness of two popular and simple calibration methods on p
 
 * Temperature Scaling
 * Lable Smoothing
+
+## How to Run
+For each experiment presented in our paper, the code files and scripts are organized in separate subfolders. To facilitate ease of use, we have provided a "run.sh" file within each subfolder, which contains the necessary commands to train or evaluate the corresponding models. For instance, to fine-tune the CodeBERT model on the task of code clone detection, please run the following instructions:
+```
+CUDA_VISIBLE_DEVICES=0 python main.py \
+    --do_train \
+    --model_name=microsoft/codebert-base \
+    --train_data_file=../dataset/train_sampled.txt \
+    --eval_data_file=../dataset/valid_sampled.txt \
+    --output_dir=./models/codebert/ \
+    --epoch 5 \
+    --block_size 512 \
+    --train_batch_size 12 \
+    --eval_batch_size 64 \
+    --learning_rate 5e-5 \
+    --max_grad_norm 1.0 \
+    --evaluate_during_training \
+    --seed 123456 2>&1| tee ./logs/train_codebert.log
+```
+
+And to evaluate the fine-tuned models, run:
+```
+CUDA_VISIBLE_DEVICES=0 python main.py \
+    --do_eval \
+    --model_name=microsoft/codebert-base \
+    --train_data_file=../dataset/train_sampled.txt \
+    --eval_data_file=../dataset/test.txt \
+    --output_dir=./models/codebert/ \
+    --epoch 5 \
+    --block_size 512 \
+    --train_batch_size 12 \
+    --eval_batch_size 64 \
+    --seed 123456 2>&1| tee ./logs/test_codebert.log
+```
+
+To calibrate the fine-tuned models with Temperature Scaling, following the instructions in "train_ts.sh" files:
+```
+CUDA_VISIBLE_DEVICES=1 python train_ts.py \
+    --model_name="microsoft/codebert-base" \
+    --model_path="models/codebert/checkpoint-best-f1/model.bin" \
+    --eval_data_file="../dataset/valid_sampled.txt" \
+    --test_data_file="../dataset/test_sampled.txt" \
+    --eval_batch_size=16 \
+    --block_size=512
+```
 
 
 
