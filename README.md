@@ -83,4 +83,4 @@ CUDA_VISIBLE_DEVICES=1 python train_ts.py \
 
 ## Acknowledgement
 
-We are very grateful that the authors of CodeBERTa, CodeBERT, GraphCodeBERT, CodeT5, TextCNN and ASTNN make their models and code publicly available so that we can build this repository on top of their code.
+We are very grateful that the authors of CodeBERTa, CodeBERT, GraphCodeBERT, CodeT5, UniXcoder, TextCNN and ASTNN make their models and code publicly available so that we can build this repository on top of their code.
